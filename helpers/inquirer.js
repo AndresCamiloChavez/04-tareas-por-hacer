@@ -19,30 +19,51 @@ const menuOptions = [
 ];
 const opcionPausa = [
   {
-    type: 'input',
+    type: "input",
     name: "opcion",
     message: `Presione ${"ENTER".blue} para continuar \n`,
   },
 ];
 
 const inquirerMenu = async () => {
-//   console.clear();
+  //   console.clear();
   console.log("==================================".green);
   console.log("Seleccione una opción");
   console.log("==================================\n".green);
 
   const { opcion } = await inquirer.prompt(menuOptions);
-  console.log("Ha seleccionado -> ".bgYellow , opcion);
+  console.log("Ha seleccionado -> ".bgYellow, opcion);
   return opcion;
 };
 
 const pausa = async () => {
   let resp = await inquirer.prompt(opcionPausa);
-  console.log('\n');
+  console.log("\n");
   return resp;
 };
+
+const leerInput = async (message) => {
+  const question = [
+    {
+      type: "input",
+      name: "desc",
+      message,
+      validate(value) {
+        if (value.length === 0) {
+          return "Por favor ingrese un valor";
+        }
+        return true;
+      },
+    }
+  ];
+  let {desc} = await inquirer.prompt(question);
+  return desc;
+  
+};
+
 
 module.exports = {
   inquirerMenu,
   pausa,
+  leerInput
 };
